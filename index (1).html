@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinetic — Building Personal Brands That Stand Out</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-deep: #0a0e18;
+      --bg: #0f131d;
+      --surface: #1c1f2a;
+      --surface-2: #262a35;
+      --surface-3: #171b26;
+      --input: #0a0e18;
+      --text: #dfe2f1;
+      --text-muted: #c3c6d7;
+      --text-soft: #bec6e0;
+      --blue: #2563eb;
+      --blue-light: #b4c5ff;
+      --green: #4edea3;
+      --green-dark: #007d55;
+      --amber: #f59e0b;
+      --error: #ffb4ab;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      vertical-align: middle;
+    }
+
+    .display { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; }
+    .section { position: relative; overflow: hidden; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 9999px;
+      background: var(--surface-2);
+      padding: 4px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: var(--blue-light);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.2px;
+      transition: transform .15s ease, background .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn-primary {
+      background: var(--blue);
+      color: #eeefff;
+      padding: 16px 40px;
+      box-shadow: 0 20px 25px -5px rgba(37,99,235,.3), 0 8px 10px -6px rgba(37,99,235,.3);
+    }
+    .btn-primary:hover { background: #1d4fd6; }
+    .btn-secondary {
+      background: var(--surface-2);
+      color: var(--text);
+      font-weight: 500;
+      padding: 16px 24px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+    }
+    .btn-secondary:hover { background: #2f3340; }
+    .btn[disabled] { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* ---------- SECTION 1: HERO ---------- */
+    .hero { background: var(--bg); padding: 48px 0 144px; }
+    .hero-glow-main {
+      position: absolute;
+      left: 50%;
+      top: 25%;
+      width: 720px;
+      height: 480px;
+      transform: translateX(-50%);
+      background: rgba(37,99,235,.15);
+      filter: blur(140px);
+      border-radius: 9999px;
+      pointer-events: none;
+    }
+    .hero-glow-side {
+      position: absolute;
+      right: 40px;
+      top: -40px;
+      width: 360px;
+      height: 360px;
+      background: rgba(0,125,85,.1);
+      filter: blur(110px);
+      border-radius: 9999px;
+      pointer-events: none;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-copy { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface-2);
+      border-radius: 9999px;
+      padding: 4px 16px;
+      box-shadow: 0 1px 1px rgba(0,0,0,.05);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .3px;
+      color: var(--text);
+    }
+    .live-dot { position: relative; width: 8px; height: 8px; }
+    .live-dot::before, .live-dot::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: var(--green);
+    }
+    .live-dot::before { opacity: .75; animation: ping 1.6s cubic-bezier(0,0,.2,1) infinite; }
+    @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+
+    .h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 64px;
+      line-height: 72px;
+      letter-spacing: -1.92px;
+      color: var(--text);
+    }
+    .h1 .grad {
+      background: linear-gradient(90deg, #b4c5ff 0%, #2563eb 50%, #4edea3 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .subhead {
+      max-width: 576px;
+      font-size: 18px;
+      line-height: 28px;
+      letter-spacing: -.09px;
+      color: var(--text-muted);
+    }
+    .support-line {
+      background: var(--surface-3);
+      border-radius: 8px;
+      padding: 8px 28px 8px 16px;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--text-soft);
+    }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; padding-top: 4px; }
+    .cta-row .btn-primary { font-size: 20px; }
+    .cta-row .btn-primary .material-symbols-outlined { font-size: 20px; }
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      letter-spacing: .5px;
+      color: var(--text-muted);
+    }
+    .stars { color: var(--amber); letter-spacing: 2px; font-size: 13px; }
+
+    .visual-card {
+      position: relative;
+      background: rgba(38,42,53,.9);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,.4);
+    }
+    .vc-header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 16px; gap: 8px; }
+    .vc-identity { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+      background: var(--blue);
+      color: #002a78;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .vc-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); white-space: nowrap; }
+    .vc-name .material-symbols-outlined { font-size: 13px; color: var(--blue-light); vertical-align: -2px; margin-left: 4px; font-variation-settings: 'FILL' 1; }
+    .vc-sub { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; color: var(--text-muted); margin-top: 4px; }
+    .tag-green {
+      background: rgba(0,125,85,.3);
+      color: var(--green);
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .88px;
+      white-space: nowrap;
+    }
+    .metric-block { background: #0a0e18; border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 4px; }
+    .metric-top { display: flex; align-items: flex-start; justify-content: space-between; }
+    .metric-label { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .52px; color: var(--text-muted); }
+    .metric-delta { display: flex; align-items: center; gap: 2px; color: var(--green); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; }
+    .metric-delta .material-symbols-outlined { font-size: 14px; }
+    .metric-value { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 48px; line-height: 56px; letter-spacing: -1.2px; color: var(--text); }
+    .sparkline { height: 52px; padding-top: 4px; }
+    .sparkline svg { width: 100%; height: 48px; }
+    .triad { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 4px; }
+    .triad-card { background: #1c1f2a; border-radius: 8px; padding: 13.5px 8px 10.5px; display: flex; flex-direction: column; gap: 5.5px; }
+    .triad-label { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; color: var(--text-muted); }
+    .triad-value { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -.2px; color: var(--text); }
+    .triad-sub { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; }
+    .vc-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 20px; gap: 8px; }
+    .vc-footer .label { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; color: var(--text-muted); }
+    .verified { display: flex; align-items: center; gap: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; color: var(--blue-light); }
+    .dot-green { width: 6px; height: 6px; border-radius: 9999px; background: var(--green); display: inline-block; }
+
+    /* ---------- SECTION 2: PROVEN TRACTION ---------- */
+    .traction { background: var(--bg-deep); padding: 80px 0; }
+    .section-head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; max-width: 672px; margin: 0 auto; }
+    .h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 56px;
+      letter-spacing: -1.2px;
+      color: var(--text);
+    }
+    .lead {
+      font-size: 18px;
+      line-height: 28px;
+      letter-spacing: -.09px;
+      color: var(--text-muted);
+    }
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 64px;
+    }
+    .bento-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    }
+    .bento-card.wide { grid-column: span 2; }
+    .bento-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 16px; }
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-box .material-symbols-outlined { font-size: 24px; }
+    .ib-blue { background: rgba(37,99,235,.2); color: var(--blue-light); }
+    .ib-green { background: rgba(0,125,85,.3); color: var(--green); }
+    .ib-grey { background: rgba(63,70,92,.3); color: var(--text-soft); }
+    .chip {
+      border-radius: 9999px;
+      padding: 4px 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .52px;
+      white-space: nowrap;
+    }
+    .chip-blue { background: rgba(37,99,235,.2); color: var(--blue-light); }
+    .chip-green { background: rgba(0,125,85,.2); color: var(--green); }
+    .chip-grey { background: #313540; color: var(--text); }
+    .bento-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 20px; letter-spacing: -.2px; color: var(--text); }
+    .bento-body { font-size: 16px; line-height: 24px; color: var(--text-muted); margin-top: 4px; }
+    .quote-banner {
+      margin-top: 32px;
+      background: linear-gradient(90deg, #262a35 0%, #1c1f2a 50%, #262a35 100%);
+      border-radius: 12px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+    }
+    .quote-banner p {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: -.8px;
+      color: var(--text);
+    }
+
+    /* ---------- SECTION 3: LEAD FORM ---------- */
+    .lead-form-section { background: var(--bg); padding: 96px 0; scroll-margin-top: 24px; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .narrative { display: flex; flex-direction: column; gap: 24px; }
+    .narrative-head { display: flex; flex-direction: column; gap: 4px; }
+    .zero-pill {
+      align-self: flex-start;
+      background: var(--surface-2);
+      border-radius: 9999px;
+      padding: 2.5px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      color: var(--green);
+    }
+    .h2-left {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 56px;
+      letter-spacing: -1.2px;
+      color: var(--text);
+      padding-top: 4px;
+    }
+    .narrative-sub { font-size: 18px; line-height: 28px; letter-spacing: -.09px; color: var(--text-muted); }
+    .feature-list { display: flex; flex-direction: column; gap: 16px; }
+    .feature {
+      background: var(--surface-3);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+    .feature .material-symbols-outlined { font-size: 20px; padding-top: 2px; }
+    .feature-title { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 16px; line-height: 24px; color: var(--text); }
+    .feature-body { font-size: 14px; line-height: 20px; color: var(--text-muted); }
+
+    .form-card {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 48px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,.25);
+    }
+    .lead-form { display: flex; flex-direction: column; gap: 16px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .field.full { grid-column: 1 / -1; }
+    .field label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .52px;
+      color: var(--text);
+    }
+    .field input {
+      width: 100%;
+      background: var(--input);
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      color: var(--text);
+      box-shadow: inset 0 2px 4px 0 rgba(0,0,0,.05);
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .field input::placeholder { color: #434655; opacity: 1; }
+    .field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.25); }
+    .submit-btn {
+      width: 100%;
+      margin-top: 8px;
+      background: var(--blue);
+      color: #eeefff;
+      padding: 16px 0;
+      font-size: 20px;
+      box-shadow: 0 20px 25px -5px rgba(37,99,235,.3), 0 8px 10px -6px rgba(37,99,235,.3);
+    }
+    .submit-btn:hover { background: #1d4fd6; }
+    .form-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding-top: 4px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      letter-spacing: .52px;
+      color: var(--text-muted);
+    }
+    .form-note .material-symbols-outlined { font-size: 14px; color: var(--green); }
+    .form-status {
+      min-height: 22px;
+      text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .form-status.ok { color: var(--green); }
+    .form-status.err { color: var(--error); }
+
+    /* ---------- SECTION 4: RUPEE 1 AUDIT ---------- */
+    .audit { background: var(--bg-deep); padding: 96px 0; }
+    .audit-glow {
+      position: absolute;
+      left: -96px;
+      bottom: -96px;
+      width: 384px;
+      height: 384px;
+      background: rgba(37,99,235,.2);
+      filter: blur(120px);
+      border-radius: 9999px;
+      pointer-events: none;
+    }
+    .audit-card {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(155deg, #262a35 0%, #1c1f2a 100%);
+      border-radius: 16px;
+      padding: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,.25);
+    }
+    .audit-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+    .promo-ribbon {
+      background: var(--green-dark);
+      border-radius: 9999px;
+      padding: 4px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .33px;
+      color: #003824;
+    }
+    .promo-ribbon .material-symbols-outlined { font-size: 14px; }
+    .slots {
+      font-family: 'Courier New', 'Liberation Mono', monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .88px;
+      color: var(--text-muted);
+    }
+    .audit-grid {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .audit-copy { display: flex; flex-direction: column; gap: 16px; }
+    .audit-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      font-size: 48px;
+      line-height: 56px;
+      letter-spacing: -1.2px;
+      color: var(--text);
+    }
+    .audit-sub { font-size: 18px; line-height: 28px; letter-spacing: -.09px; color: var(--text-muted); }
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-top: 8px; }
+    .check-item {
+      background: rgba(10,14,24,.6);
+      border-radius: 8px;
+      min-height: 64px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--text);
+    }
+    .check-item .material-symbols-outlined { color: var(--green); font-size: 20px; font-variation-settings: 'FILL' 1; flex-shrink: 0; }
+    .audit-side { display: flex; flex-direction: column; gap: 16px; }
+    .philosophy {
+      background: #0a0e18;
+      border-radius: 12px;
+      padding: 29.5px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6.5px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+    }
+    .philosophy-label {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: var(--blue-light);
+    }
+    .philosophy-quote {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 28px;
+      letter-spacing: -.09px;
+      color: var(--text);
+    }
+    .audit-cta { display: flex; flex-direction: column; gap: 4px; }
+    .audit-cta .btn-primary { width: 100%; padding: 16px 40px; font-size: 20px; text-decoration: none; }
+    .audit-cta-note {
+      text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .88px;
+      color: var(--text-muted);
+    }
+
+    /* ---------- SECTION 5: TESTIMONIALS ---------- */
+    .testimonials { background: var(--bg); padding: 96px 0; }
+    .testimonials .section-head { gap: 8px; }
+    .t-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .t-card {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
+    }
+    .t-card.single { gap: 28px; }
+    .t-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .t-stars { display: flex; align-items: center; gap: 2px; color: var(--amber); }
+    .t-stars .material-symbols-outlined { font-size: 20px; font-variation-settings: 'FILL' 1; }
+    .verified-small { display: flex; align-items: center; gap: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 11px; letter-spacing: .88px; color: var(--blue-light); white-space: nowrap; }
+    .verified-small .material-symbols-outlined { font-size: 13px; font-variation-settings: 'FILL' 1; }
+    .t-quote { font-style: italic; font-size: 18px; line-height: 28px; letter-spacing: -.09px; color: var(--text); }
+    .t-person { display: flex; align-items: center; gap: 16px; padding-top: 24px; }
+    .t-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 9999px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #2a3350 0%, #1c2236 100%);
+      color: var(--blue-light);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+    }
+    .t-avatar .material-symbols-outlined { font-size: 24px; }
+    .t-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 16px; line-height: 24px; color: var(--text); }
+    .t-role { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; color: var(--text-muted); }
+    .t-closing {
+      text-align: center;
+      margin-top: 48px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -.5px;
+      color: var(--blue-light);
+    }
+
+    /* ---------- SECTION 6: FAQ ---------- */
+    .faq { background: var(--bg-deep); padding: 96px 0; }
+    .faq-wrap { max-width: 840px; margin: 0 auto; padding: 0 24px; display: flex; flex-direction: column; gap: 64px; }
+    .faq-head { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+    }
+    .faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 20px;
+      letter-spacing: -.2px;
+      color: var(--text);
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-chev { width: 12px; height: 7.4px; flex-shrink: 0; transition: transform .25s ease; color: var(--text-muted); }
+    .faq-item[open] .faq-chev { transform: rotate(180deg); }
+    .faq-answer {
+      padding: 12px 0 4px;
+      font-size: 16px;
+      line-height: 24px;
+      color: var(--text-muted);
+    }
+
+    /* ---------- SECTION 7: FOOTER ---------- */
+    .footer { background: var(--bg); padding: 80px 0; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 5fr 3fr 4fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .brand { display: flex; flex-direction: column; gap: 8px; }
+    .brand-name { display: flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 24px; letter-spacing: -.6px; color: var(--text); }
+    .brand-name .dot { width: 8px; height: 8px; border-radius: 9999px; background: var(--blue); }
+    .brand-line { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 20px; line-height: 28px; letter-spacing: -.2px; color: var(--text); }
+    .brand-desc { padding-top: 4px; font-size: 14px; line-height: 20px; color: var(--text-muted); }
+    .foot-col { display: flex; flex-direction: column; gap: 8px; }
+    .foot-label { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: .65px; text-transform: uppercase; color: var(--text); }
+    .foot-links { display: flex; flex-direction: column; gap: 4px; }
+    .foot-links a { font-size: 16px; line-height: 24px; color: var(--text-muted); transition: color .2s ease; }
+    .foot-links a:hover { color: var(--blue-light); }
+    .foot-text { font-size: 16px; line-height: 24px; color: var(--text-muted); }
+    .foot-email { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -.2px; color: var(--blue-light); transition: color .2s ease; }
+    .foot-email:hover { color: #dbe3ff; }
+    .foot-response { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 11px; letter-spacing: .88px; color: var(--text-muted); }
+    .foot-bottom {
+      margin-top: 40px;
+      background: rgba(10,14,24,.5);
+      border-radius: 8px;
+      padding: 24px 16px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .foot-bottom p { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: .52px; color: var(--text); }
+    .mono {
+      font-family: 'Courier New', 'Liberation Mono', monospace;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .88px;
+      color: var(--green);
+    }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 1024px) {
+      .h1 { font-size: 52px; line-height: 60px; letter-spacing: -1.4px; }
+      .h2, .h2-left, .audit-title { font-size: 40px; line-height: 48px; }
+      .hero-grid, .form-grid, .audit-grid { grid-template-columns: 1fr; }
+      .visual-card { max-width: 520px; width: 100%; margin: 0 auto; }
+      .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .bento-card.wide { grid-column: span 2; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid > :first-child { grid-column: 1 / -1; }
+      .audit-card { padding: 48px; }
+    }
+    @media (max-width: 720px) {
+      .wrap { padding: 0 20px; }
+      .hero { padding: 32px 0 96px; }
+      .h1 { font-size: 40px; line-height: 48px; letter-spacing: -1px; }
+      .h2, .h2-left, .audit-title { font-size: 32px; line-height: 40px; letter-spacing: -.8px; }
+      .subhead, .narrative-sub, .audit-sub, .lead { font-size: 16px; line-height: 24px; }
+      .bento, .t-grid, .field-row, .checklist { grid-template-columns: 1fr; }
+      .bento-card.wide { grid-column: auto; }
+      .form-card { padding: 28px 22px; }
+      .audit-card { padding: 32px 22px; }
+      .t-card { padding: 28px 22px; }
+      .quote-banner { padding: 28px 20px; }
+      .quote-banner p { font-size: 22px; line-height: 30px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-row .btn { width: 100%; }
+      .faq-wrap { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ SECTION 1: HERO ============ -->
+  <section class="section hero" id="top">
+    <div class="hero-glow-main" aria-hidden="true"></div>
+    <div class="hero-glow-side" aria-hidden="true"></div>
+
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="live-badge">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span>⚡ Proven 0 to Hero Growth Engine</span>
+          </span>
+
+          <h1 class="h1 display">
+            Turn Your LinkedIn<br />
+            From <span class="grad">Invisible to</span><br />
+            <span class="grad">Influential</span>
+          </h1>
+
+          <p class="subhead">
+            We don't just “optimize profiles.” We build your personal brand from scratch — with strategy, content, and consistency that actually gets you seen.
+          </p>
+
+          <div class="support-line">
+            From 0 to hero on LinkedIn — without confusion, guesswork, or wasting months figuring it out alone.
+          </div>
+
+          <div class="cta-row">
+            <a href="#audit" class="btn btn-primary">
+              Get Your Profile Audit
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+            <a href="#lead-form" class="btn btn-secondary">Start Growing Today</a>
+          </div>
+
+          <div class="rating">
+            <span class="stars" aria-hidden="true">★★★★★</span>
+            <span>Rated 4.9/5 by 100+ Founders &amp; Executives</span>
+          </div>
+        </div>
+
+        <aside class="visual-card" aria-label="Live performance preview">
+          <div class="vc-header">
+            <div class="vc-identity">
+              <div class="avatar">K</div>
+              <div>
+                <div class="vc-name">Kinetic Client Executive <span class="material-symbols-outlined">verified</span></div>
+                <div class="vc-sub">Live Performance • Past 90 Days</div>
+              </div>
+            </div>
+            <span class="tag-green">Active Engine</span>
+          </div>
+
+          <div class="metric-block">
+            <div class="metric-top">
+              <span class="metric-label">Impressions</span>
+              <span class="metric-delta"><span class="material-symbols-outlined">trending_up</span>+1,240%</span>
+            </div>
+            <div class="metric-value">482,900</div>
+            <div class="sparkline">
+              <svg viewBox="0 0 368 48" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#4edea3" stop-opacity="0.18" />
+                    <stop offset="100%" stop-color="#4edea3" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d="M0 44 C 50 42, 90 36, 130 30 S 200 18, 250 15 S 320 10, 368 8 L368 48 L0 48 Z" fill="url(#sparkFill)" />
+                <path d="M0 44 C 50 42, 90 36, 130 30 S 200 18, 250 15 S 320 10, 368 8" fill="none" stroke="#4edea3" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="triad">
+            <div class="triad-card">
+              <span class="triad-label">Followers</span>
+              <span class="triad-value">0 → 18,450</span>
+              <span class="triad-sub" style="color: var(--green)">in 90 Days</span>
+            </div>
+            <div class="triad-card">
+              <span class="triad-label">Inbound Deals</span>
+              <span class="triad-value">42 Qualified</span>
+              <span class="triad-sub" style="color: var(--blue-light)">this month</span>
+            </div>
+          </div>
+
+          <div class="vc-footer">
+            <span class="label">B2B Software &amp; Advisory Target</span>
+            <span class="verified"><span class="dot-green"></span>Verified Feed</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 2: PROVEN TRACTION ============ -->
+  <section class="section traction" id="traction">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="pill">Proven Traction</span>
+        <h2 class="h2 display">Real Growth. Real Results.</h2>
+        <p class="lead">Our data-driven framework turns dormant profiles into inbound client acquisition machines.</p>
+      </div>
+
+      <div class="bento">
+        <div class="bento-card">
+          <div class="bento-top">
+            <div class="icon-box ib-blue"><span class="material-symbols-outlined">groups</span></div>
+            <span class="chip chip-blue">100+ Professionals</span>
+          </div>
+          <div>
+            <h3 class="bento-title">Executive Authority</h3>
+            <p class="bento-body">Helped 100+ professionals build authority on LinkedIn with bespoke strategic roadmaps.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-top">
+            <div class="icon-box ib-green"><span class="material-symbols-outlined">hub</span></div>
+            <span class="chip chip-green">Consistent Inbound Leads</span>
+          </div>
+          <div>
+            <h3 class="bento-title">Demand Generation</h3>
+            <p class="bento-body">Generated consistent inbound leads through content that directly solves enterprise buyer pain points.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-top">
+            <div class="icon-box ib-grey"><span class="material-symbols-outlined">rocket_launch</span></div>
+            <span class="chip chip-grey">0 → Authority</span>
+          </div>
+          <div>
+            <h3 class="bento-title">Ground-Up Branding</h3>
+            <p class="bento-body">Built personal brands from absolute zero into market recognized ecosystem champions.</p>
+          </div>
+        </div>
+
+        <div class="bento-card">
+          <div class="bento-top">
+            <div class="icon-box ib-blue"><span class="material-symbols-outlined">visibility</span></div>
+            <span class="chip chip-blue">100k+ Organic Views</span>
+          </div>
+          <div>
+            <h3 class="bento-title">Algorithm Mastery</h3>
+            <p class="bento-body">Content that reaches thousands organically every single week without ad spend.</p>
+          </div>
+        </div>
+
+        <div class="bento-card wide">
+          <div class="bento-top">
+            <div class="icon-box ib-green"><span class="material-symbols-outlined">conversion_path</span></div>
+            <span class="chip chip-green">High Conversion</span>
+          </div>
+          <div>
+            <h3 class="bento-title">Funnel Optimization</h3>
+            <p class="bento-body">Profiles that convert views into opportunities, consulting engagements, investment talks, and pipeline opportunities.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="quote-banner">
+        <p>“This isn't luck. It's a system that works.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 3: LEAD FORM ============ -->
+  <section class="section lead-form-section" id="lead-form">
+    <div class="wrap">
+      <div class="form-grid">
+        <div class="narrative">
+          <div class="narrative-head">
+            <span class="zero-pill">ZERO FRICTION</span>
+            <h2 class="h2-left display">Let's Build Your LinkedIn Presence Together</h2>
+          </div>
+          <p class="narrative-sub">Tell us a bit about you — and we'll show you exactly how to grow.</p>
+
+          <div class="feature-list">
+            <div class="feature">
+              <span class="material-symbols-outlined" style="color: var(--blue-light)">schedule</span>
+              <div>
+                <div class="feature-title">24-Hour Turnaround</div>
+                <div class="feature-body">Get your initial strategic direction and account opportunities in under a day.</div>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="material-symbols-outlined" style="color: var(--green)">query_stats</span>
+              <div>
+                <div class="feature-title">Tailored Executive Breakdown</div>
+                <div class="feature-body">We customize messaging to your exact niche, buyers, and personal monetization targets.</div>
+              </div>
+            </div>
+            <div class="feature">
+              <span class="material-symbols-outlined" style="color: var(--text-soft)">verified_user</span>
+              <div>
+                <div class="feature-title">Zero Obligation</div>
+                <div class="feature-body">Actionable roadmap yours to keep forever whether you execute solo or alongside our team.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form class="lead-form" id="leadForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Alex Morgan" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="alex@company.com" autocomplete="email" required />
+              </div>
+            </div>
+
+            <div class="field full">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 (555) 019-2834" autocomplete="tel" required />
+            </div>
+
+            <div style="padding-top: 8px;">
+              <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">Get My Growth Plan</button>
+            </div>
+
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+
+            <div class="form-note">
+              <span class="material-symbols-outlined">lock</span>
+              <span>No spam. No fluff. Just actionable clarity.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 4: RUPEE 1 AUDIT ============ -->
+  <section class="section audit" id="audit">
+    <div class="audit-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="audit-card">
+        <div class="audit-top">
+          <span class="promo-ribbon">
+            <span class="material-symbols-outlined">sell</span>
+            ₹1 Special Offer • Limited Availability
+          </span>
+          <span class="slots">SLOTS_REMAINING: 4 / WEEK</span>
+        </div>
+
+        <div class="audit-grid">
+          <div class="audit-copy">
+            <h2 class="audit-title display">Get a Complete LinkedIn Audit for Just Rupee 1</h2>
+            <p class="audit-sub">Not a sales call. A real breakdown of what's working, what's not, and what to fix.</p>
+
+            <div class="checklist">
+              <div class="check-item"><span class="material-symbols-outlined">check_circle</span><span>Profile review (headline, banner, positioning)</span></div>
+              <div class="check-item"><span class="material-symbols-outlined">check_circle</span><span>Content gap analysis</span></div>
+              <div class="check-item"><span class="material-symbols-outlined">check_circle</span><span>Personal brand direction</span></div>
+              <div class="check-item"><span class="material-symbols-outlined">check_circle</span><span>Clear action steps to improve visibility</span></div>
+            </div>
+          </div>
+
+          <div class="audit-side">
+            <div class="philosophy">
+              <span class="philosophy-label">The Philosophy</span>
+              <p class="philosophy-quote">“Why Rupee 1? Because once you see the value, you'll know what to do next.”</p>
+            </div>
+
+            <div class="audit-cta">
+              <a class="btn btn-primary" href="https://payments.cashfree.com/forms/getaudit" target="_blank" rel="noopener noreferrer">Book My Audit Now</a>
+              <span class="audit-cta-note">Instant Access • ₹1 Only • Direct Calendar Slot</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 5: TESTIMONIALS ============ -->
+  <section class="section testimonials" id="testimonials">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="pill">Testimonials &amp; Case Studies</span>
+        <h2 class="h2 display">What Our Clients Say</h2>
+        <p class="lead">Verified feedback from creators, founders, and executives who took the leap.</p>
+      </div>
+
+      <div class="t-grid">
+        <article class="t-card">
+          <div class="t-head">
+            <div class="t-stars" aria-label="5 out of 5 stars">
+              <span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+            </div>
+            <span class="verified-small"><span class="material-symbols-outlined">verified</span>Verified Client</span>
+          </div>
+          <p class="t-quote">“I had zero presence before this. Within weeks, I started getting inbound messages and profile views.”</p>
+          <div class="t-person">
+            <div class="t-avatar"><span class="material-symbols-outlined">person</span></div>
+            <div>
+              <div class="t-name">Tech Founder &amp; Angel Investor</div>
+              <div class="t-role">SaaS Scaleup • Seed to Series A</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card">
+          <div class="t-head">
+            <div class="t-stars" aria-label="5 out of 5 stars">
+              <span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+            </div>
+            <span class="verified-small"><span class="material-symbols-outlined">verified</span>Verified Client</span>
+          </div>
+          <p class="t-quote">“The clarity I got here saved me months of trial and error.”</p>
+          <div class="t-person">
+            <div class="t-avatar"><span class="material-symbols-outlined">person</span></div>
+            <div>
+              <div class="t-name">VP of Marketing</div>
+              <div class="t-role">Enterprise Fintech Global</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card">
+          <div class="t-head">
+            <div class="t-stars" aria-label="5 out of 5 stars">
+              <span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+            </div>
+            <span class="verified-small"><span class="material-symbols-outlined">verified</span>Verified Client</span>
+          </div>
+          <p class="t-quote">“It's not just content — it's a full strategy. That's what made the difference.”</p>
+          <div class="t-person">
+            <div class="t-avatar"><span class="material-symbols-outlined">person</span></div>
+            <div>
+              <div class="t-name">Executive Consultant</div>
+              <div class="t-role">Strategic Advisory Practice</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="t-card single">
+          <div class="t-head">
+            <div class="t-stars" aria-label="5 out of 5 stars">
+              <span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span><span class="material-symbols-outlined">star</span>
+            </div>
+            <span class="verified-small"><span class="material-symbols-outlined">verified</span>Verified Client</span>
+          </div>
+          <p class="t-quote">“I finally understand how LinkedIn actually works.”</p>
+          <div class="t-person">
+            <div class="t-avatar"><span class="material-symbols-outlined">person</span></div>
+            <div>
+              <div class="t-name">Senior Product Strategist</div>
+              <div class="t-role">Cloud Infrastructure</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <p class="t-closing">Results speak louder than promises.</p>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 6: FAQ ============ -->
+  <section class="section faq" id="faq">
+    <div class="faq-wrap">
+      <div class="faq-head">
+        <span class="pill">Everything You Need to Know</span>
+        <h2 class="h2 display">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Who is this service for? <svg class="faq-chev" viewBox="0 0 12 7.4" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p class="faq-answer">Founders, executives, creators and consultants who want to be recognised as authorities on LinkedIn.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you create content for me? <svg class="faq-chev" viewBox="0 0 12 7.4" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p class="faq-answer">We build the strategy and content plan, and can support execution depending on the package you choose.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How long does it take to see results? <svg class="faq-chev" viewBox="0 0 12 7.4" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p class="faq-answer">Most clients see increased profile views and inbound messages within weeks, with compounding growth over 90 days.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Is this only for job seekers? <svg class="faq-chev" viewBox="0 0 12 7.4" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p class="faq-answer">No. It is built for anyone using LinkedIn to win clients, investors, partnerships or opportunities.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What makes this different? <svg class="faq-chev" viewBox="0 0 12 7.4" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p class="faq-answer">We focus on a data-first system that connects your personal brand directly to pipeline and business outcomes.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need prior experience on LinkedIn? <svg class="faq-chev" viewBox="0 0 12 7.4" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <p class="faq-answer">No experience is needed. We start from wherever you are, even if your profile is almost empty.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION 7: FOOTER ============ -->
+  <footer class="section footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="brand">
+          <div class="brand-name">Kinetic <span class="dot"></span></div>
+          <p class="brand-line">Building personal brands that stand out — not blend in.</p>
+          <p class="brand-desc">The data-first LinkedIn growth advisory for forward-thinking leaders, executives, and enterprise innovators.</p>
+        </div>
+
+        <div class="foot-col">
+          <span class="foot-label">Navigation</span>
+          <nav class="foot-links">
+            <a href="#top">Home</a>
+            <a href="#traction">Services</a>
+            <a href="#audit">Book Audit</a>
+            <a href="#lead-form">Contact</a>
+          </nav>
+        </div>
+
+        <div class="foot-col">
+          <span class="foot-label">Direct Access</span>
+          <p class="foot-text">Have questions? Reach out anytime.</p>
+          <a class="foot-email" href="mailto:growth@kineticgrowth.com">growth@kineticgrowth.com</a>
+          <span class="foot-response">Response guaranteed within 4 hours</span>
+        </div>
+      </div>
+
+      <div class="foot-bottom">
+        <p>2026 All Rights Reserved. Built for those who are ready to be seen.</p>
+        <span class="mono">ENCRYPTED_ADVISORY_NET</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ===== Configuration =====
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxu0EUxNd9F1GVj0y4PXWTHf7Qszg5S0Jx2W8LzQSJ5I81QilnmCv9aPQ8FsF-SSMLgkw/exec";
+
+    // ===== Elements =====
+    const form = document.getElementById("leadForm");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const phoneInput = document.getElementById("phone");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusEl = document.getElementById("formStatus");
+
+    function setLoading(isLoading) {
+      submitBtn.disabled = isLoading;
+      submitBtn.textContent = isLoading ? "Sending..." : "Get My Growth Plan";
+    }
+
+    function showSuccess() {
+      setLoading(false);
+      statusEl.className = "form-status ok";
+      statusEl.textContent = "Thanks! We'll be in touch within 4 hours.";
+      form.reset();
+    }
+
+    function showError() {
+      setLoading(false);
+      statusEl.className = "form-status err";
+      statusEl.textContent = "Something went wrong. Please try again.";
+    }
+
+    // ===== Form submit =====
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = nameInput.value.trim();
+      const email = emailInput.value.trim();
+      const phone = phoneInput.value.trim();
+
+      if (!name || !email || !phone) {
+        statusEl.className = "form-status err";
+        statusEl.textContent = "Please fill in name, email and phone.";
+        return;
+      }
+
+      statusEl.className = "form-status";
+      statusEl.textContent = "";
+      setLoading(true);
+
+      const url = SCRIPT_URL + "?" + new URLSearchParams({ name, email, phone });
+
+      fetch(url, { method: "GET", mode: "no-cors" })
+        .then(() => showSuccess())
+        .catch(() => showError());
+    });
+  </script>
+</body>
+</html>
